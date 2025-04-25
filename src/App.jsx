@@ -3,7 +3,7 @@ import Card from "./components/Card";
 
 const symbols = ["🍕", "🍔", "🍟", "🌭", "🍿", "🥤", "🍩", "🍪"];
 
-const generate = (list) => {
+function generateCards(list) {
   return [...list, ...list]
     .sort(() => Math.random() - 0.5)
     .map((symbol, index) => ({
@@ -12,7 +12,7 @@ const generate = (list) => {
       flipped: false,
       matched: false,
     }));
-};
+}
 
 export default function MemoryGame() {
   const [cards, setCards] = useState([]);
@@ -20,31 +20,29 @@ export default function MemoryGame() {
   const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
-    setCards(generate(symbols));
+    setCards(generateCards(symbols));
   }, []);
 
-  const resetGame = () => {
-    setCards(generate(symbols));
+  function resetGame() {
+    setCards(generateCards(symbols));
     setFirstCard(null);
     setDisabled(false);
-  };
-  const resetTurn = () => {
+  }
+  function resetTurn() {
     setFirstCard(null);
     setDisabled(false);
-  };
-  const handleCardClick = (card) => {
+  }
+  function handleCardClick(card) {
     if (disabled || card.flipped || card.matched) return;
 
     const updatedCards = cards.map((c) =>
       c.id == card.id ? { ...c, flipped: true } : c
     );
     setCards(updatedCards);
-
     if (!firstCard) {
       setFirstCard(card);
     } else {
       setDisabled(true);
-
       if (firstCard.symbol === card.symbol) {
         setCards((prev) =>
           prev.map((c) =>
@@ -62,10 +60,10 @@ export default function MemoryGame() {
             )
           );
           resetTurn();
-        }, 800);
+        }, 1000);
       }
     }
-  };
+  }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-r from-[#2112f3] to-[#01012b]">
