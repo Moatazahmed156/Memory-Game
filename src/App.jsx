@@ -35,8 +35,8 @@ export default function MemoryGame() {
   function handleCardClick(card) {
     if (disabled || card.flipped || card.matched) return;
 
-    const updatedCards = cards.map((c) =>
-      c.id == card.id ? { ...c, flipped: true } : c
+    const updatedCards = cards.map((e) =>
+      e.id == card.id ? { ...e, flipped: true } : e
     );
     setCards(updatedCards);
     if (!firstCard) {
@@ -45,18 +45,18 @@ export default function MemoryGame() {
       setDisabled(true);
       if (firstCard.symbol === card.symbol) {
         setCards((prev) =>
-          prev.map((c) =>
-            c.symbol === card.symbol ? { ...c, matched: true } : c
+          prev.map((e) =>
+            e.symbol === card.symbol ? { ...e, matched: true } : e
           )
         );
         resetTurn();
       } else {
         setTimeout(() => {
           setCards((prevCards) =>
-            prevCards.map((c) =>
-              c.id === firstCard.id || c.id === card.id
-                ? { ...c, flipped: false }
-                : c
+            prevCards.map((e) =>
+              e.id === firstCard.id || e.id === card.id
+                ? { ...e, flipped: false }
+                : e
             )
           );
           resetTurn();
